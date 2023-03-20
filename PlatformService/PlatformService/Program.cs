@@ -11,6 +11,8 @@ builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddControllers();
+
 //builder.Services.AddSwaggerGen(c =>
 //{
 //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Platform Service", Version = "1.0" });
@@ -18,6 +20,12 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //);
 
 var app = builder.Build();
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+    endpoints.MapControllers()
+);
 
 PrepDb.PrepPopulation(app);
 
