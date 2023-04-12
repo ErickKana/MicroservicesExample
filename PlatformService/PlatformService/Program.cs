@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PlatformService.Data;
+using PlatformService.SyncDataServices.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,13 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 
+builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
+
+
 
 //builder.Services.AddSwaggerGen(c =>
 //{
@@ -20,6 +25,8 @@ builder.Services.AddControllers();
 //);
 
 var app = builder.Build();
+
+Console.WriteLine($"--> Configuration Service endpoint: {builder.Configuration["CommandService"]}");
 
 app.UseRouting();
 
