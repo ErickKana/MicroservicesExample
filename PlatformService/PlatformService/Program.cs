@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using PlatformService.AsyncDataServices;
 using PlatformService.Data;
 using PlatformService.SyncDataServices.Http;
 
@@ -20,6 +21,7 @@ else
 
 
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+builder.Services.AddSingleton<IMessageBugClient, MessageBusClient>();
 
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 
