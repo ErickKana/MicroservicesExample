@@ -1,9 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using CmdApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+var connectionString = builder.Configuration["Data:CommandApiConnection:ConnectionString"];
+builder.Services.AddDbContext<CommandContext>(x => x.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
